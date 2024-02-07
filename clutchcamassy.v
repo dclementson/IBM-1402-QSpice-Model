@@ -1,159 +1,134 @@
-// Automatically generated .v file on Sat Feb  3 23:32:20 2024
-//
+module clutchcamassy(clk, clch_latch, power, cont_angle, clch_angle, rc1, rc2, rc3, rc4, rc5, rc6, rc7, rc8, rc9, rc12, rl1, rl2, rl3, rl10, sccb);
+input logic clk;
+input logic clch_latch;
+input logic power;
+output int cont_angle;
+output int clch_angle;
+output logic rc1;
+output logic rc2;
+output logic rc3;
+output logic rc4;
+output logic rc5;
+output logic rc6;
+output logic rc7;
+output logic rc8;
+output logic rc9;
+output logic rc12;
+output logic rl1;
+output logic rl2;
+output logic rl3;
+output logic rl10;
+output logic sccb;
+logic latched = 1'b1;
 
-module clutchcamassy ( clk, clch_latch, power, cont_angle, clch_angle, rc1, rc2, rc3, rc4, rc5, rc6, rc7, rc8, rc9, rc12, rl1, rl2, rl3, rl10, sccb ) ;
-// You will probably want to flush out the nature of these port declarations:
-   input reg clk;
-   input reg clch_latch;
-   input reg power;
-   output reg [0:11] cont_angle;
-   output reg [0:8] clch_angle;
-   output reg rc1;
-   output reg rc2;
-   output reg rc3;
-   output reg rc4;
-   output reg rc5;
-   output reg rc6;
-   output reg rc7;
-   output reg rc8;
-   output reg rc9;
-   output reg rc12;
-   output reg rl1;
-   output reg rl2;
-   output reg rl3;
-   output reg rl10;
-   output reg sccb;
-   reg latched = 1'b1;
-
-   // Implement the module here
-
-always @(posedge clk)
-   begin
-      if(cont_angle == 9'd315)
-        begin
-            clch_angle <= 9'd315;
-            if (clch_latch)
-               begin
-                  // $display("Latched at 315 degrees at t=%g", 1e-9 * $realtime);
-                  latched <= 1'b1;
-               end
-            else
-               begin
-                  // $display("Unlatched to at t=%g", 1e-9 * $realtime);
-                  latched <= 1'b0;
-               end
-      end
-
-      if (power)
-         cont_angle <= cont_angle + 9'h01;
-      if (cont_angle == 9'd360)
-         begin
-            // $display("Continuous Angle rolled over at t=%g", 1e-9 * $realtime);
-            cont_angle <= 9'd0;
-         end
-
-      if(latched)
-         begin
-            if (power)
-               clch_angle <= clch_angle + 9'h01;
-            if (clch_angle == 9'd360)
-               begin
-                  // $display("Clutch Angle rolled over at t=%g", 1e-9 * $realtime);
-                  clch_angle <= 9'd0;
-               end
-         end
+always @(posedge clk) begin
+   if (cont_angle == 315) begin
+         clch_angle <= 315;
+         latched <= clch_latch;
+         //if (clch_latch)
+         //   $display("Latched at 315 degrees at t=%g", 1e-9 * $realtime);
+         //else
+         //   $display("Unlatched to at t=%g", 1e-9 * $realtime);
    end
 
-   assign rc1 =
-   (((cont_angle >= 9'd008) && (cont_angle < 9'd093)) ||
-    ((cont_angle >= 9'd128) && (cont_angle < 9'd213)) ||
-    ((cont_angle >= 9'd248) && (cont_angle < 9'd333)))
+   if (power)
+      cont_angle <= (cont_angle + 1) % 360;
+
+   if (latched) begin
+      if (power)
+         clch_angle <= (clch_angle + 1) % 360;
+   end
+end
+
+assign rc1 =
+   (((cont_angle >= 8) && (cont_angle < 93))    ||
+    ((cont_angle >= 128) && (cont_angle < 213)) ||
+    ((cont_angle >= 248) && (cont_angle < 333)))
     ? 1'b1 : 1'b0;
 
-   assign rc2 =
-    ((cont_angle >= 9'd340) || (cont_angle < 9'd065)  ||
-    ((cont_angle >= 9'd100) && (cont_angle < 9'd195)) ||
-    ((cont_angle >= 9'd220) && (cont_angle < 9'd306)))
+assign rc2 =
+    ((cont_angle >= 340) || (cont_angle < 65)   ||
+    ((cont_angle >= 100) && (cont_angle < 195)) ||
+    ((cont_angle >= 220) && (cont_angle < 306)))
     ? 1'b1 : 1'b0;
 
-   assign rc3 =
-    ((cont_angle >= 9'd342) || (cont_angle < 9'd027)  ||
-    ((cont_angle >= 9'd102) && (cont_angle < 9'd147)) ||
-    ((cont_angle >= 9'd222) && (cont_angle < 9'd267)))
+assign rc3 =
+    ((cont_angle >= 342) || (cont_angle < 27)   ||
+    ((cont_angle >= 102) && (cont_angle < 147)) ||
+    ((cont_angle >= 222) && (cont_angle < 267)))
     ? 1'b1 : 1'b0;
 
-   assign rc4 =
-   (((cont_angle >= 9'd022) && (cont_angle < 9'd107)) ||
-    ((cont_angle >= 9'd142) && (cont_angle < 9'd227)) ||
-    ((cont_angle >= 9'd262) && (cont_angle < 9'd347)))
+assign rc4 =
+   (((cont_angle >= 22) && (cont_angle < 107))  ||
+    ((cont_angle >= 142) && (cont_angle < 227)) ||
+    ((cont_angle >= 262) && (cont_angle < 347)))
     ? 1'b1 : 1'b0;
 
-   assign rc5 =
-    ((cont_angle >= 9'd272) && (cont_angle < 9'd342))
+assign rc5 =
+    ((cont_angle >= 272) && (cont_angle < 342))
     ? 1'b1 : 1'b0;
 
-   assign rc6 =
-   (((cont_angle >= 9'd032) && (cont_angle < 9'd102)) ||
-    ((cont_angle >= 9'd152) && (cont_angle < 9'd222)) ||
-    ((cont_angle >= 9'd272) && (cont_angle < 9'd342)))
+assign rc6 =
+   (((cont_angle >= 32) && (cont_angle < 102))  ||
+    ((cont_angle >= 152) && (cont_angle < 222)) ||
+    ((cont_angle >= 272) && (cont_angle < 342)))
     ? 1'b1 : 1'b0;
 
-   assign rc7 =
-    ((cont_angle >= 9'd347) || (cont_angle < 9'd022)  ||
-    ((cont_angle >= 9'd107) && (cont_angle < 9'd142)) ||
-    ((cont_angle >= 9'd227) && (cont_angle < 9'd262)))
+assign rc7 =
+    ((cont_angle >= 347) || (cont_angle < 22)   ||
+    ((cont_angle >= 107) && (cont_angle < 142)) ||
+    ((cont_angle >= 227) && (cont_angle < 262)))
     ? 1'b1 : 1'b0;
 
-   assign rc8 =
-   (((cont_angle >= 9'd032) && (cont_angle < 9'd117)) ||
-    ((cont_angle >= 9'd152) && (cont_angle < 9'd237)) ||
-    ((cont_angle >= 9'd272) && (cont_angle < 9'd357)))
+assign rc8 =
+   (((cont_angle >= 32) && (cont_angle < 117))  ||
+    ((cont_angle >= 152) && (cont_angle < 237)) ||
+    ((cont_angle >= 272) && (cont_angle < 357)))
     ? 1'b1 : 1'b0;
 
-   assign rc9 =
-    ((cont_angle >= 9'd305) || (cont_angle < 9'd015)  ||
-    ((cont_angle >= 9'd065) && (cont_angle < 9'd135)) ||
-    ((cont_angle >= 9'd185) && (cont_angle < 9'd265)))
+assign rc9 =
+    ((cont_angle >= 305) || (cont_angle < 15)   ||
+    ((cont_angle >= 65) && (cont_angle < 135))  ||
+    ((cont_angle >= 185) && (cont_angle < 265)))
     ? 1'b1 : 1'b0;
 
-   assign rc12 =
-    ((cont_angle >= 9'd331) || (cont_angle < 9'd006)  ||
-    ((cont_angle >= 9'd091) && (cont_angle < 9'd126)) ||
-    ((cont_angle >= 9'd211) && (cont_angle < 9'd246)))
+assign rc12 =
+    ((cont_angle >= 331) || (cont_angle < 6)    ||
+    ((cont_angle >= 91) && (cont_angle < 126))  ||
+    ((cont_angle >= 211) && (cont_angle < 246)))
     ? 1'b1 : 1'b0;
 
 
-   assign rl1 =
-   (((clch_angle >= 9'd155) && (clch_angle < 9'd185)) ||
-    ((clch_angle >= 9'd242) && (clch_angle < 9'd307)))
+assign rl1 =
+   (((clch_angle >= 155) && (clch_angle < 185)) ||
+    ((clch_angle >= 242) && (clch_angle < 307)))
     ? 1'b1 : 1'b0;
 
-   assign rl2 =
-     (clch_angle >= 9'd325) || (clch_angle < 9'd155)
+assign rl2 =
+     (clch_angle >= 325) || (clch_angle < 155)
     ? 1'b1 : 1'b0;
 
-   assign rl3 =
-    ((clch_angle >= 9'd155) && (clch_angle < 9'd277))
+assign rl3 =
+    ((clch_angle >= 155) && (clch_angle < 277))
     ? 1'b1 : 1'b0;
 
-   assign rl10 =
-    ((clch_angle >= 9'd272) && (clch_angle < 9'd342))
+assign rl10 =
+    ((clch_angle >= 272) && (clch_angle < 342))
     ? 1'b1 : 1'b0;
 
-   assign sccb =
-   (((clch_angle >= 9'd012) && (clch_angle < 9'd014)) ||
-    ((clch_angle >= 9'd030) && (clch_angle < 9'd032)) ||
-    ((clch_angle >= 9'd048) && (clch_angle < 9'd050)) ||
-    ((clch_angle >= 9'd066) && (clch_angle < 9'd068)) ||
-    ((clch_angle >= 9'd084) && (clch_angle < 9'd086)) ||
-    ((clch_angle >= 9'd102) && (clch_angle < 9'd104)) ||
-    ((clch_angle >= 9'd120) && (clch_angle < 9'd122)) ||
-    ((clch_angle >= 9'd138) && (clch_angle < 9'd140)) ||
-    ((clch_angle >= 9'd156) && (clch_angle < 9'd158)) ||
-    ((clch_angle >= 9'd174) && (clch_angle < 9'd176)) ||
-    ((clch_angle >= 9'd192) && (clch_angle < 9'd194)) ||
-    ((clch_angle >= 9'd210) && (clch_angle < 9'd212)))
+assign sccb =
+   (((clch_angle >= 12) && (clch_angle < 14)  ) ||
+    ((clch_angle >= 30) && (clch_angle < 32))   ||
+    ((clch_angle >= 48) && (clch_angle < 50))   ||
+    ((clch_angle >= 66) && (clch_angle < 68))   ||
+    ((clch_angle >= 84) && (clch_angle < 86))   ||
+    ((clch_angle >= 102) && (clch_angle < 104)) ||
+    ((clch_angle >= 120) && (clch_angle < 122)) ||
+    ((clch_angle >= 138) && (clch_angle < 140)) ||
+    ((clch_angle >= 156) && (clch_angle < 158)) ||
+    ((clch_angle >= 174) && (clch_angle < 176)) ||
+    ((clch_angle >= 192) && (clch_angle < 194)) ||
+    ((clch_angle >= 210) && (clch_angle < 212)))
     ? 1'b1 : 1'b0;
 
 endmodule
-

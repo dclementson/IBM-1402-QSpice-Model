@@ -32,8 +32,8 @@ VL_MODULE(Vclutchcamassy_) {
     VL_OUT8(sccb,0,0);
     CData/*0:0*/ clutchcamassy__DOT__latched;
     CData/*0:0*/ __Vclklast__TOP__clk;
-    VL_OUT16(cont_angle,11,0);
-    VL_OUT16(clch_angle,8,0);
+    VL_OUT(cont_angle,31,0);
+    VL_OUT(clch_angle,31,0);
 
     // INTERNAL VARIABLES
     Vclutchcamassy__Syms* const vlSymsp;

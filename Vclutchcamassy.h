@@ -42,8 +42,8 @@ class Vclutchcamassy VL_NOT_FINAL {
     VL_OUT8(&rl3,0,0);
     VL_OUT8(&rl10,0,0);
     VL_OUT8(&sccb,0,0);
-    VL_OUT16(&cont_angle,11,0);
-    VL_OUT16(&clch_angle,8,0);
+    VL_OUT(&cont_angle,31,0);
+    VL_OUT(&clch_angle,31,0);
 
     // CELLS
     // Public to allow access to /* verilator public */ items.
