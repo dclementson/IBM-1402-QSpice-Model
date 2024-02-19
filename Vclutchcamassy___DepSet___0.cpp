@@ -16,7 +16,8 @@ VL_INLINE_OPT void Vclutchcamassy____sequent__TOP__0(Vclutchcamassy_* vlSelf) {
     // Body
     __Vdly__clutchcamassy__DOT__latched = vlSelf->clutchcamassy__DOT__latched;
     __Vdly__clch_angle = vlSelf->clch_angle;
-    if ((0x13bU == vlSelf->cont_angle)) {
+    if (((((0x4bU == vlSelf->cont_angle) | (0xc3U == vlSelf->cont_angle)) 
+          | (0x13bU == vlSelf->cont_angle)) & (~ (IData)(vlSelf->clutchcamassy__DOT__latched)))) {
         __Vdly__clch_angle = 0x13bU;
         __Vdly__clutchcamassy__DOT__latched = vlSelf->clch_latch;
     }

@@ -22,7 +22,15 @@ output logic sccb;
 logic latched = 1'b1;
 
 always @(posedge clk) begin
-   if (cont_angle == 315) begin
+   // For sync mode, only latch at 315 degrees. For non-sync mode, clutch can
+   // latch at any of 75, 195 or 315 degrees.
+   if (
+      (cont_angle == 75 ||    // non-sync mode
+       cont_angle == 195 ||   // non-sync mode
+       cont_angle == 315) && !latched
+   ) begin
+         // clch_angle always starts at 315 degrees to simplify logic for
+	 // generating RL cam outputs.
          clch_angle <= 315;
          latched <= clch_latch;
          //if (clch_latch)
