@@ -35,7 +35,7 @@ always @(posedge clk) begin
       cont_angle == 195 ||   // non-sync mode
       cont_angle == 315)
    ) begin
-         latched <= clch_latch;
+         latched = clch_latch;
    end
 
    if (power) begin

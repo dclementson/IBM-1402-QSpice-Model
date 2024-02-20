@@ -10,17 +10,14 @@ VL_INLINE_OPT void Vclutchcamassy____sequent__TOP__0(Vclutchcamassy_* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vclutchcamassy__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vclutchcamassy____sequent__TOP__0\n"); );
-    // Init
-    CData/*0:0*/ __Vdly__clutchcamassy__DOT__latched;
     // Body
-    __Vdly__clutchcamassy__DOT__latched = vlSelf->clutchcamassy__DOT__latched;
     if (((0x13bU == vlSelf->clch_angle) & (((0x4bU 
                                              == vlSelf->cont_angle) 
                                             | (0xc3U 
                                                == vlSelf->cont_angle)) 
                                            | (0x13bU 
                                               == vlSelf->cont_angle)))) {
-        __Vdly__clutchcamassy__DOT__latched = vlSelf->clch_latch;
+        vlSelf->clutchcamassy__DOT__latched = vlSelf->clch_latch;
     }
     if (vlSelf->power) {
         vlSelf->cont_angle = VL_MODDIVS_III(32, ((IData)(1U) 
@@ -31,7 +28,6 @@ VL_INLINE_OPT void Vclutchcamassy____sequent__TOP__0(Vclutchcamassy_* vlSelf) {
                                                  + vlSelf->clch_angle), (IData)(0x168U));
         }
     }
-    vlSelf->clutchcamassy__DOT__latched = __Vdly__clutchcamassy__DOT__latched;
     vlSelf->rl1 = ((VL_LTES_III(32, 0x9bU, vlSelf->clch_angle) 
                     & VL_GTS_III(32, 0xb9U, vlSelf->clch_angle)) 
                    | (VL_LTES_III(32, 0xf2U, vlSelf->clch_angle) 
