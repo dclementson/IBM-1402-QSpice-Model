@@ -11,7 +11,9 @@ VL_ATTR_COLD void Vclutchcamassy____initial__TOP__0(Vclutchcamassy_* vlSelf) {
     Vclutchcamassy__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vclutchcamassy____initial__TOP__0\n"); );
     // Body
-    vlSelf->clutchcamassy__DOT__latched = 1U;
+    vlSelf->cont_angle = 0U;
+    vlSelf->clch_angle = 0x13bU;
+    vlSelf->clutchcamassy__DOT__latched = 0U;
 }
 
 VL_ATTR_COLD void Vclutchcamassy____settle__TOP__0(Vclutchcamassy_* vlSelf) {
@@ -19,6 +21,40 @@ VL_ATTR_COLD void Vclutchcamassy____settle__TOP__0(Vclutchcamassy_* vlSelf) {
     Vclutchcamassy__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vclutchcamassy____settle__TOP__0\n"); );
     // Body
+    vlSelf->rl1 = ((VL_LTES_III(32, 0x9bU, vlSelf->clch_angle) 
+                    & VL_GTS_III(32, 0xb9U, vlSelf->clch_angle)) 
+                   | (VL_LTES_III(32, 0xf2U, vlSelf->clch_angle) 
+                      & VL_GTS_III(32, 0x133U, vlSelf->clch_angle)));
+    vlSelf->rl2 = (VL_LTES_III(32, 0x145U, vlSelf->clch_angle) 
+                   | VL_GTS_III(32, 0x9bU, vlSelf->clch_angle));
+    vlSelf->rl3 = (VL_LTES_III(32, 0x9bU, vlSelf->clch_angle) 
+                   & VL_GTS_III(32, 0x115U, vlSelf->clch_angle));
+    vlSelf->rl10 = (VL_LTES_III(32, 0x110U, vlSelf->clch_angle) 
+                    & VL_GTS_III(32, 0x156U, vlSelf->clch_angle));
+    vlSelf->sccb = ((((((((((((VL_LTES_III(32, 0xcU, vlSelf->clch_angle) 
+                               & VL_GTS_III(32, 0xeU, vlSelf->clch_angle)) 
+                              | (VL_LTES_III(32, 0x1eU, vlSelf->clch_angle) 
+                                 & VL_GTS_III(32, 0x20U, vlSelf->clch_angle))) 
+                             | (VL_LTES_III(32, 0x30U, vlSelf->clch_angle) 
+                                & VL_GTS_III(32, 0x32U, vlSelf->clch_angle))) 
+                            | (VL_LTES_III(32, 0x42U, vlSelf->clch_angle) 
+                               & VL_GTS_III(32, 0x44U, vlSelf->clch_angle))) 
+                           | (VL_LTES_III(32, 0x54U, vlSelf->clch_angle) 
+                              & VL_GTS_III(32, 0x56U, vlSelf->clch_angle))) 
+                          | (VL_LTES_III(32, 0x66U, vlSelf->clch_angle) 
+                             & VL_GTS_III(32, 0x68U, vlSelf->clch_angle))) 
+                         | (VL_LTES_III(32, 0x78U, vlSelf->clch_angle) 
+                            & VL_GTS_III(32, 0x7aU, vlSelf->clch_angle))) 
+                        | (VL_LTES_III(32, 0x8aU, vlSelf->clch_angle) 
+                           & VL_GTS_III(32, 0x8cU, vlSelf->clch_angle))) 
+                       | (VL_LTES_III(32, 0x9cU, vlSelf->clch_angle) 
+                          & VL_GTS_III(32, 0x9eU, vlSelf->clch_angle))) 
+                      | (VL_LTES_III(32, 0xaeU, vlSelf->clch_angle) 
+                         & VL_GTS_III(32, 0xb0U, vlSelf->clch_angle))) 
+                     | (VL_LTES_III(32, 0xc0U, vlSelf->clch_angle) 
+                        & VL_GTS_III(32, 0xc2U, vlSelf->clch_angle))) 
+                    | (VL_LTES_III(32, 0xd2U, vlSelf->clch_angle) 
+                       & VL_GTS_III(32, 0xd4U, vlSelf->clch_angle)));
     vlSelf->rc1 = (((VL_LTES_III(32, 8U, vlSelf->cont_angle) 
                      & VL_GTS_III(32, 0x5dU, vlSelf->cont_angle)) 
                     | (VL_LTES_III(32, 0x80U, vlSelf->cont_angle) 
@@ -75,40 +111,6 @@ VL_ATTR_COLD void Vclutchcamassy____settle__TOP__0(Vclutchcamassy_* vlSelf) {
                         & VL_GTS_III(32, 0x7eU, vlSelf->cont_angle))) 
                     | (VL_LTES_III(32, 0xd3U, vlSelf->cont_angle) 
                        & VL_GTS_III(32, 0xf6U, vlSelf->cont_angle)));
-    vlSelf->rl1 = ((VL_LTES_III(32, 0x9bU, vlSelf->clch_angle) 
-                    & VL_GTS_III(32, 0xb9U, vlSelf->clch_angle)) 
-                   | (VL_LTES_III(32, 0xf2U, vlSelf->clch_angle) 
-                      & VL_GTS_III(32, 0x133U, vlSelf->clch_angle)));
-    vlSelf->rl2 = (VL_LTES_III(32, 0x145U, vlSelf->clch_angle) 
-                   | VL_GTS_III(32, 0x9bU, vlSelf->clch_angle));
-    vlSelf->rl3 = (VL_LTES_III(32, 0x9bU, vlSelf->clch_angle) 
-                   & VL_GTS_III(32, 0x115U, vlSelf->clch_angle));
-    vlSelf->rl10 = (VL_LTES_III(32, 0x110U, vlSelf->clch_angle) 
-                    & VL_GTS_III(32, 0x156U, vlSelf->clch_angle));
-    vlSelf->sccb = ((((((((((((VL_LTES_III(32, 0xcU, vlSelf->clch_angle) 
-                               & VL_GTS_III(32, 0xeU, vlSelf->clch_angle)) 
-                              | (VL_LTES_III(32, 0x1eU, vlSelf->clch_angle) 
-                                 & VL_GTS_III(32, 0x20U, vlSelf->clch_angle))) 
-                             | (VL_LTES_III(32, 0x30U, vlSelf->clch_angle) 
-                                & VL_GTS_III(32, 0x32U, vlSelf->clch_angle))) 
-                            | (VL_LTES_III(32, 0x42U, vlSelf->clch_angle) 
-                               & VL_GTS_III(32, 0x44U, vlSelf->clch_angle))) 
-                           | (VL_LTES_III(32, 0x54U, vlSelf->clch_angle) 
-                              & VL_GTS_III(32, 0x56U, vlSelf->clch_angle))) 
-                          | (VL_LTES_III(32, 0x66U, vlSelf->clch_angle) 
-                             & VL_GTS_III(32, 0x68U, vlSelf->clch_angle))) 
-                         | (VL_LTES_III(32, 0x78U, vlSelf->clch_angle) 
-                            & VL_GTS_III(32, 0x7aU, vlSelf->clch_angle))) 
-                        | (VL_LTES_III(32, 0x8aU, vlSelf->clch_angle) 
-                           & VL_GTS_III(32, 0x8cU, vlSelf->clch_angle))) 
-                       | (VL_LTES_III(32, 0x9cU, vlSelf->clch_angle) 
-                          & VL_GTS_III(32, 0x9eU, vlSelf->clch_angle))) 
-                      | (VL_LTES_III(32, 0xaeU, vlSelf->clch_angle) 
-                         & VL_GTS_III(32, 0xb0U, vlSelf->clch_angle))) 
-                     | (VL_LTES_III(32, 0xc0U, vlSelf->clch_angle) 
-                        & VL_GTS_III(32, 0xc2U, vlSelf->clch_angle))) 
-                    | (VL_LTES_III(32, 0xd2U, vlSelf->clch_angle) 
-                       & VL_GTS_III(32, 0xd4U, vlSelf->clch_angle)));
 }
 
 VL_ATTR_COLD void Vclutchcamassy____eval_initial(Vclutchcamassy_* vlSelf) {

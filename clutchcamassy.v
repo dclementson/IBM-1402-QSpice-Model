@@ -19,31 +19,29 @@ output logic rl2;
 output logic rl3;
 output logic rl10;
 output logic sccb;
-logic latched = 1'b1;
+logic latched;
+
+initial begin
+   cont_angle = 0;
+   clch_angle = 315; // Clutched shaft rests at 315 degrees.
+   latched = 0;
+end
 
 always @(posedge clk) begin
    // For sync mode, only latch at 315 degrees. For non-sync mode, clutch can
    // latch at any of 75, 195 or 315 degrees.
-   if (
-      (cont_angle == 75 ||    // non-sync mode
-       cont_angle == 195 ||   // non-sync mode
-       cont_angle == 315) && !latched
+   if ((clch_angle == 315) && (
+      cont_angle == 75 ||    // non-sync mode
+      cont_angle == 195 ||   // non-sync mode
+      cont_angle == 315)
    ) begin
-         // clch_angle always starts at 315 degrees to simplify logic for
-	 // generating RL cam outputs.
-         clch_angle <= 315;
          latched <= clch_latch;
-         //if (clch_latch)
-         //   $display("Latched at 315 degrees at t=%g", 1e-9 * $realtime);
-         //else
-         //   $display("Unlatched to at t=%g", 1e-9 * $realtime);
    end
 
-   if (power)
+   if (power) begin
+      // Selectively advance the continuous and clutched shaft positions.
       cont_angle <= (cont_angle + 1) % 360;
-
-   if (latched) begin
-      if (power)
+      if (latched)
          clch_angle <= (clch_angle + 1) % 360;
    end
 end
